@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="announcement__cart" *ngFor="let notification of notifications">
+      <div class="announcement__inner d-flex">
+        <div class="col-4">
+          <img routerLink="/show" [queryParams]="{a:notification.targetBooking.accommodation.id}"
+               *ngIf="notification.targetBooking.accommodation.photos[0]"
+               [src]="AppModule.API_ADDRESS + 'photos/' + notification.targetBooking.accommodation.photos[0].name.toString()"
+               width="75%" class="announcement__photo">
+        </div>
+        <div class="col-8">
+          <h3>Nowa rezerwacja</h3>
+          <p>Ogłoszenie: {{notification.targetBooking.accommodation.name}}</p>
+          <p>Imię i
+            nazwisko: {{notification.targetBooking.user.firstName}} {{notification.targetBooking.user.lastName}}</p>
+          <p>Daty: {{notification.targetBooking.dateStart.substring(0, 10)}}
+            - {{notification.targetBooking.dateEnd.substring(0, 10)}}</p>
+          <p class="announcement__price">Cena: {{notification.targetBooking.price}} zł</p>
+          <button class="announcement__btn" (click)="acceptNotification(notification)">
+            Zaakceptuj
+          </button>
+          <button class="announcement__btn" (click)="rejectNotification(notification)"> Odrzuć
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="notifications.length == 0">
+    <h3>Brak nowych powiadomień</h3>
+  </div>
+</div>

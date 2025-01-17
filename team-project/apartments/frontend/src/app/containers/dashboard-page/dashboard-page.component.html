@@ -1,0 +1,33 @@
+<main class="main" *ngIf="user">
+  <div class="container">
+    <div class="main__content d-flex flex-column align-items-center">
+      <div class="row d-flex justify-between">
+        <div class="col-3">
+          <a routerLink="/dash" [queryParams]="{a:'settings'}" class="dashboard__link">Ustawienia profilu</a> <!--alias + "nazwa strony"-->
+          <a routerLink="/dash" [queryParams]="{a:'add_accommodation'}" class="dashboard__link">Dodaj ogłoszenie</a>
+          <a routerLink="/dash" [queryParams]="{a:'accommodations_list'}" class="dashboard__link">Twoje ogłoszenia</a>
+          <a routerLink="/dash" [queryParams]="{a:'bookings_list'}" class="dashboard__link">Twoje rezerwacje</a>
+        </div>
+        <div class="col-9">
+          <div class="dashboard-view">
+            <h3 *ngIf="action == 'settings'">Ustawienia konta</h3>
+            <app-dashboard-user-view *ngIf="action == 'settings'"></app-dashboard-user-view>
+          </div>
+          <div class="">
+            <h3 *ngIf="action == 'add_accommodation'">Dodaj nowe ogłoszenie</h3>
+            <app-add-accommodation *ngIf="action == 'add_accommodation'"></app-add-accommodation>
+          </div>
+          <div class="">
+            <h3 *ngIf="action == 'accommodations_list'">Twoje ogłoszenia</h3>
+            <app-list-host-accommodations *ngIf="action == 'accommodations_list'"></app-list-host-accommodations>
+          </div>
+          <div class="">
+            <h3 *ngIf="action == 'bookings_list'">Twoje rezerwacje</h3>
+            <app-list-bookings *ngIf="action == 'bookings_list'"></app-list-bookings>
+          </div>
+        </div>
+      </div>
+      <!-- przekierowanie do kolejnego wybranego elementu-->
+    </div>
+  </div>
+</main>

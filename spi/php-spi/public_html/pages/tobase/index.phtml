@@ -1,0 +1,32 @@
+<?php $title = "Dodawanie grantu" ?>
+
+<?php if(isset($_POST['submit'])) : ?>
+<div class="result">
+	<?php include __DIR__ . "/../../db_connect.php";
+
+	extract($_POST, EXTR_OVERWRITE, "form_");
+
+	echo mysqli_query($conn, "INSERT INTO grants(date, grantor, recipient, amount) VALUE('$date', '$grantor', '$recipient', '$amount');")
+		? "Dodano do bazy: $date | $grantor | $recipient | $amount"
+		: "Nie udało się dodać do bazy <br> <a href='tobase'>spróbuj ponownie</a>" ;
+	?>
+    <br>
+    <a href="base">popatrz</a>
+</div>
+
+<?php else : ?>
+
+<form method="POST" class="standard-box main-box">
+    <div class="title">
+        Dodawanie grantu
+    </div>
+    <div class="content">
+	    <?php include __DIR__ . '/../../fields.php';
+	    foreach($fields as $input_id => $label)
+		    echo "<label for='$input_id'>$label</label> <input type='text' name='$input_id' id='$input_id'>";
+	    ?>
+    </div>
+    <input type="submit" name="submit" value="Dodaj">
+</form>
+
+<?php endif ?>

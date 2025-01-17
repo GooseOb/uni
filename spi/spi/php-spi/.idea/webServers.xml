@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="cc1e8f3f-1099-4d42-99be-d2aed6b9ba00" name="php-spi" url="http://localhost:8080">
+        <fileTransfer rootFolder="/home/students/edvin/public_html" accessType="SFTP" host="xor.math.uni.lodz.pl" port="22" sshConfigId="4c578e98-684c-48a5-b5a5-6a3d5c832e6e" sshConfig="edvin@xor.math.uni.lodz.pl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

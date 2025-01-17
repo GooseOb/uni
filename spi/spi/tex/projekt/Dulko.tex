@@ -1,0 +1,488 @@
+\documentclass[12 pt, a4paper, leqno]{article}
+\usepackage[cp1250]{inputenc}
+\usepackage[letterspace=100]{microtype}
+\usepackage{polski, amsmath, amssymb, amsthm, enumitem, titlesec}
+\author{Stefan Banach}
+
+\titleformat{\subsection}[runin]{\normalfont\bfseries}{\arabic{subsection}.}{0.5em}{}[.]
+
+\newcounter{subsectionEnumCount}
+\setcounter{subsectionEnumCount}{0}
+\newenvironment{subsecEnumItem}[1]
+{\addtocounter{subsectionEnumCount}{1}
+\begin{enumerate}[label=(\arabic{subsection}.\arabic{subsectionEnumCount})]\item\it \label{#1}}
+{\end{enumerate}}
+
+\newenvironment{eq}[1]
+{\noindent\begin{equation}\label{#1}}
+{\end{equation}}
+
+\newcounter{apostropheEqCount}
+\setcounter{apostropheEqCount}{0}
+\newenvironment{apostropheEq}[1]
+{\addtocounter{apostropheEqCount}{1}
+\begin{eq}{#1}\tag{\arabic{apostropheEqCount}'}}
+{\end{eq}}
+
+\newtheoremstyle{myStyle}{3pt}{3pt}{}{16pt}{\lsstyle\bf}{.}{ }{}
+\theoremstyle{myStyle}
+
+\newtheorem*{dowod}{Dowód}
+\newtheorem*{przyklady}{PRZYK£ADY}
+\newtheorem*{uwaga}{\it Uwaga}
+
+\newcommand{\mySubsection}[1]
+{\subsection{#1}\setcounter{subsectionEnumCount}{0}}
+
+\newcommand{\eqSeparator}{\text{\;\;\;\;}}
+
+\newcommand{\angleBrackets}[1]{$\langle #1 \rangle$}
+
+\newcommand{\E}{\varepsilon}
+\newcommand{\e}{$\varepsilon$}
+\newcommand{\fj}{$\mathfrak{J}$}
+\newcommand{\fl}{$\mathfrak{L}$}
+\newcommand{\en}{$\mathcal{E}^{n}$}
+
+\begin{document}
+
+\setcounter{page}{197}
+\setcounter{section}{3}
+\setcounter{subsection}{2}
+\setcounter{subsectionEnumCount}{3}
+
+Istotnie, $ I\subset I $, widz¹c $ |I| \leq m_{w}(I) $. Z drugiej strony, je¿eli $ I'_{1}+...+I'_{l} \subset I $ i przedzia³y $ I'_{1},...,I'_{l} $ nie zachodz¹ na siebie, to $ |I'_{1}|+...+|I'_{l}| \leq |I| $, a zatem $ m_{w}(I) \leq |I| $
+
+Z okreœlenia miary wewnêtrznej \fj\ wynika wprost, ¿e
+
+\noindent
+\begin{subsecEnumItem}{2.4}
+    Je¿eli $ A \subset B $, to $ m_{w}(A) \leq m_{w}(B) $.
+\end{subsecEnumItem}
+
+\mySubsection{W³asnoœci miary Jordana}
+Miêdzy miarami zewnêtrzn¹ \fj\ a wewnêtrzn¹ \fj\ dowolnego zbioru $A$ zachodzi zwi¹zek
+\begin{subsecEnumItem}{3.1}
+    \hspace{4cm}
+    $ m_{w}(A) \leq m_{z}(A) $.
+\end{subsecEnumItem}
+
+\begin{dowod}
+    Je¿eli $ m_{w}(A)=0 $, nierównoœæ \ref{3.1} jest oczywista. W przeiwnym rezie do ka¿dego $ \E > 0 $ istniej¹ na mocy (1.2) i (2.2) przedzia³y $ I_{1},...,I_{k} $ oraz $ I'_{1},...,I'_{l} $, czyni¹ce zadoœæ warunkom (ii) oraz (ii'), sk¹d na mocy tw. (2.2), str. 181, $ |I'_{1}|+...+|I'_{l}| \leq |I_{1}|+...+|I_{k}| $, wiêc $ m_{w}(A)-\E \leq m_{z}(A)+ \E $. St¹d wobec dowolnoœci liczby \e\ wynika nierównoœæ \ref{3.1}, c.b.d.d.
+\end{dowod}
+
+Poniewa¿ dla ka¿dego zbioru $A$ mamy oczywiœcie $ m_{z}(A) \geq 0 $ i $ m_{w}(A) \geq 0 $, wiêc wnosimy st¹d na mocy \ref{3.1}, ¿e
+\begin{subsecEnumItem}{3.2}
+    Je¿eli $ m_{z}(A)=0 $, to równie¿ $ m_{w}(A)=0 $.
+\end{subsecEnumItem}
+\begin{subsecEnumItem}{3.3}
+    Dla ka¿dej rodziny skoñczonej zbiorów ograniczonych $ A_{1},...,A_{r} $ zachodzi wzór
+\end{subsecEnumItem}
+
+\noindent
+$$ m_{z}(A_{1}+...+A_{r}) \leq m_{z}(A_{1})+...+m_{z}(A_{r}) $$
+
+
+\begin{dowod}
+    Wystarczy oczywiœcie dowieœæ, ¿e
+    \begin{eq}{1}
+        m_{z}(A_{1}+A_{2}) \leq m_{z}(A_{1})+m_{z}(A_{2}).
+    \end{eq}
+
+    Do ka¿dego $ \E > 0 $ istniej¹ na mocy tw. (1.2) przedzia³y $ I_{1},...,I_{k} $ i $ I_{k+1},...,I_{k} $ o w³asnoœciach:
+    \begin{eq}{2}
+        A_{1} \subset I_{1} +...+I_{k_{1}},
+        \eqSeparator
+        A_{2} \subset I_{k_{1}+1} +...+I_{k_{2}},
+    \end{eq}
+    \begin{eq}{3}
+        |I_{1}|+...+|I_{k_{1}}| < m_{z}(A_{1})+\E,
+        \eqSeparator
+        |I_{k_{1}+1}|+...+|I_{k_{2}}| < m_{z}(A_{2})+\E.
+    \end{eq}
+
+    Na mocy \eqref{2} jest $ A_{1}+A_{2} \subset I_{1}+...+I_{k_{2}} $, sk¹d
+
+    \noindent
+    $$ m_{z}(A_{1}+A_{2}) \leq |I_{1}|+...+|I_{k_{2}}|, $$
+    a st¹d na mocy \eqref{3}
+
+    \noindent
+    $$ m_{z}(A_{1}+A_{2}) < m_{z}(A_{1}) + m_{z}(A_{2}) + 2\E $$
+
+    Wobec dowolnoœci liczby \e\ wynika st¹d nierównoœæ \eqref{1}, c.b.d.d.
+\end{dowod}
+
+\newpage
+
+\begin{enumerate}
+    \item[(3.3')]\it Dla ka¿dej rodziny skoñczonej zbiorów ograniczonych roz³¹cznych $ A_{1},...,A_{r} $ zachodzi wzór
+\end{enumerate}
+
+\noindent
+$$ m_{w}(A_{1})+...+m_{w}(A_{r}) \leq m_{w}(A_{1}+...+A_{r}). $$
+
+\begin{dowod}
+    Wystarczy oczywiœcie dowieœæ, ¿e
+
+    \begin{apostropheEq}{1'}
+        m_{w}(A_{1})+m_{w}(A_{2}) \leq m_{w}(A_{1}+A_{2}).
+    \end{apostropheEq}
+
+    Do ka¿dego $ \E > 0 $ istniej¹ na mocy (2.1) niezachodz¹ce na siebie przedzia³y $ I'_{1},...,I'_{l_{1}} $ i niezachodz¹ce na siebie przedzia³y $ I'_{l_{1}+1},...,I'_{l_{2}} $ o w³asnoœciach:
+
+    \begin{apostropheEq}{2'}
+        I'_{1},...,I'_{l_{1}} \subset A_{1},
+        \eqSeparator
+        I'_{l_{1}+1},...,I'_{l_{2}} \subset A_{1},
+    \end{apostropheEq}
+    \begin{apostropheEq}{3'}
+        m_{w}(A_{1})-\E < |I'_{1}|+...+|I'_{l_{1}}|,
+        \eqSeparator
+        m_{w}(A_{2})-\E < |I'_{l_{1}+1}|+...+|I'_{l_{2}}|.
+    \end{apostropheEq}
+
+    Wobec roz³¹cznoœci zbiorów $ A_{1} $ i $ A_{2} $ wnosimy z \eqref{2'}, ¿e przedzia³y ca³ej rodziny $ I'_{1},...,I'_{l_{2}} $ nie zachodz¹ na siebie, a ponadto ¿e $ I'_{1},...,I'_{l_{2}} \subset A_{1}+A_{2} $, sk¹d $ |I'_{1}|+...+|I'_{l_{2}}| \leq m_{w}(A_{1}+A_{2}) $, a st¹d na mocy \eqref{3'}
+
+    $$ m_{w}(A_{1})+m_{w}(A_{2})-2 \E < m_{w}(A_{1}+A_{2}). $$
+
+    Wobec dowolnoœci liczby \e\ wynika st¹d nierównoœæ \eqref{1'}, c.b.d.d.
+\end{dowod}
+\begin{subsecEnumItem}{3.4}
+    Dla miar \fj\ dowolnego zbioru ograniczonego $A$ i jego pochodnej $A'$ (p. str. 59) zachodzi wzór
+\end{subsecEnumItem}
+
+\noindent
+$$ m_{w}(A) \leq m_{w}(A') \leq m_{z}(A') \leq m_{z}(A). $$
+
+\begin{dowod}
+    Pierwsza z nierównoœci wynika st¹d, ¿e je¿eli przedzia³ jest zawarty w zbiorze, to jest zawarty tak¿e w jego pochodnej. Druga jest bezpoœrednim wnioskiem z \ref{3.1}.
+
+    Niech $ I_{1},...,I_{k} $ bêd¹ takimi przedzia³ami zamkniêtymi, ¿e $ A \subset I_{1}+...+I_{k} $. Poniewa¿ suma tych przedzia³ów jest zbiorem zamkniêtym, wiêc $ A' \subset I_{1}+...+I_{k} $. Zatem
+
+    \begin{eq}{4}
+        m_{z}(A') \leq m_{z}(A).
+    \end{eq}
+
+    Z drugiej strony, dla ka¿dego $ \E > 0 $ istniej¹ takie przedzia³y otwarte $ J_{1},...,J_{r} $, ¿e
+
+    \begin{eq}{5}
+        A' \subset J_{1}+...+J_{r},
+    \end{eq}
+    \begin{eq}{6}
+        |J_{1}|+...+|J_{r}| < m_{z}(A')+\E
+    \end{eq}
+
+    \newpage
+
+    Na mocy \eqref{5} zbiór $A$ nie ma punktów skupienia poza przedzia³ami $ J_{1},...,J_{r} $, a wiêc poza tymi przedzia³ami le¿y co najwy¿ej skoñczona liczba punktów zbioru $A$. Punkty te mo¿na tedy pokryæ skoñczon¹ liczb¹ przedzia³ów $ J_{r+1},...,J_{s} $ o sumie przekraczaj¹cej \e. Poniewa¿ $ A \subset J_{1},...,J_{s} $, wiêc
+
+    $$ m_{z}(A) \leq |J_{1}|,...,J_{s} \leq m_{z}(A')+2\E $$
+
+    na mocy \eqref{6}. Wobec dowolnoœci \e\ mamy zatem
+
+    \begin{eq}{7}
+        m_{z}(A) \leq m_{z}(A').
+    \end{eq}
+
+    Z \eqref{4} i \eqref{7} wynika równoœæ $ m_{z}(A') \leq m_{z}(A) $ c.b.d.d.
+\end{dowod}
+
+\begin{przyklady}
+    1. Zbior liczb postaci $1/n$, gdzie $ n=1,2,..., $ nie ma zewnêtrzn¹ \fj\ równ¹ zeru, taka jest bowiem miara pochodnej tego zbioru, jako z³o¿onej z jednego punktu (punktu 0).
+
+    2. Zbiór liczb wymiernych przedzia³u \angleBrackets{0,1}\ ma miarê wewnêtrzn¹ \fj\ równ¹ jednoœci, czyli mierze tego przedzia³u (jako swej pochodnej), miarê zaœ wewnêtrzn¹ \fj\ równ¹ zeru, poniewa¿ jest zbiorem brzegowym.
+    
+    To samo dotyczy zbioru liczb niewymiernych przedzia³u \angleBrackets{0,1}.
+    
+    3. Ka¿dy zbiór gêsty w przedziale ma miearê zewnêtrzn¹ \fj\ równ¹ mierze tego przedzia³u.
+\end{przyklady}
+
+\begin{subsecEnumItem}{3.5}
+    Je¿eli $A$ jest zbiorem ograniczonym, a $B(A)$ jego brzegiem, to:
+\end{subsecEnumItem}
+
+\noindent
+$$ m_{w}[B(A)]=0, \eqSeparator
+m_{z}[B(A)]=m_{z}(A)-m_{w}(A) $$
+
+\begin{dowod}
+    Pierwsza równoœæ jest oczywista, poniewa¿ zbiór $B(A)$ nie ma punktów wewnêtrznych.
+
+    Na mocy (i), (ii), (i') i (ii') istniej¹ dla ka¿dego $ \E > 0 $ przedzia³y $ I'_{i},...,I'_{l} $ o w³asnoœciach:
+
+    \begin{eq}{8}
+        I'_{i}+...+I'_{l} \subset A \subset I_{1}+...+I_{k},
+    \end{eq}
+    \begin{eq}{9}
+        m_{z}(A)>|I_{k}|+...+|I_{k}|,
+        \eqSeparator
+        m_{w}(A)-\E<|I'_{1}|+...+|I'_{l}|.
+    \end{eq}
+    \begin{eq}{10}
+        B(A) \subset I_{k+1}+...+I_{r},
+    \end{eq}
+    \begin{eq}{11}
+        m_{z}[B(A)]+\E>|I_{k+1}|+...+|I_{r}|.
+    \end{eq}
+
+    \newpage
+
+    Niech $I$ bêdzie przedzia³em zamkniêtym, zawieraj¹cym $ I_{1},...,I_{r} $, a $\varDelta$ podzia³em przedzia³u $I$ na takie podprzedzia³y, ¿eby $ I_{1},...,I_{r} $ by³y ich sumami.
+
+    Oznaczmy  przez $ J_{1},...,J_{\mu} $ te spoœród przedzia³ów podzia³u $\varDelta$, których wnêtrza zawarte s¹ w ró¿nicy $ (I_{1},...,I_{k})-(I'_{1},...,I'_{l}) $, a przez $ J'_{1}...,J'_{\nu} $ te, których wnêtrza zawarte s¹ w ró¿nicy $ A-(I_{k+1}+...+I_{r}) $. Zatem:
+
+    $$ I_{1}+...+I_{k}=J_{1}+...+J_{\mu}+I'_{1}+...+I'_{l}, $$
+    $$ A \subset J'_{1}+...+J'_{\nu}+I_{k+1}+...+I_{r} $$
+
+    i na mocy \eqref{8} i \eqref{10} po prawej stronie ka¿dego z tych wzorów wystêpuj¹ przedzia³y nie zachodz¹ce na siebie. Na mocy \eqref{9} i \eqref{11} otrzymujemy wiêc:
+
+    \begin{eq}{12}
+    \begin{split}
+        m_{z}(A)+\E \geq |J_{1}|+...+|J_{\mu}|+m_{w}(A)-\E, \\
+        m_{z}(A) \leq |J'_{1}|+...+|J'_{\nu}|+m_{z}[B(A)]+\E.
+    \end{split}
+    \end{eq}
+
+    Poniewa¿ zbiór $B(A)$, jako brzeg zbioru $A$, jest zawarty na mocy \eqref{8} w $ J_{1}+...+J_{\mu} $, wiêc
+
+    \begin{eq}{13}
+        m_{z}[B(A)] \leq |J_{1}|+...+|J_{\mu}|,
+    \end{eq}
+
+    a poniewa¿ wnêtrza przedzia³ów $ J'_{1}+...+J'_{\nu} $ s¹ zawarte w $A$, wiêc
+
+    \begin{eq}{14}
+        m_{w}(A) \geq |J'_{1}|+...+|J'_{\nu}|.
+    \end{eq}
+
+    Z nierównoœci \eqref{12}, \eqref{13} i \eqref{14} otrzymujemy
+
+    $$ m_{z}(A)-m_{w}(A)-\E \leq m_{z}[B(A)] \leq m_{z}(A)-m_{w}(A)+2\E $$
+    dla ka¿dego $ \E>0 $, a wiêc równoœæ, c.b.d.d.
+\end{dowod}
+\begin{subsecEnumItem}{3.6}
+    Je¿eli $A$ jest zbiorem ograniczonym, a $W(A)$ jego wnêtrzem, to
+\end{subsecEnumItem}
+
+\noindent
+$$ m_{w}[W(A)] = m_{w}(A). $$
+
+Istotnie, wobec $ W(A) \subset A $ mamy na mocy (1.5)
+
+$$ m_{w}[W(A)] \leq m_{w}(A). $$
+
+Z drugiej strony, ka¿dy przedzia³ otwarty, zawarty w $A$, jest zawarty w $W(A)$, sk¹d $ m_{w}(A) \leq m_{w}[W(A)] $.
+
+\newpage
+
+\mySubsection{Zbiory mierzalne \fj}
+Zbiór ograniczony $A$ nazywamy {\it mierzalnym w sensie Jordana} lub {\it mierzalnym \fj}, je¿eli jego miary zewnêtrzna \fj\ i wewnêtrzna \fj\ s¹ równe, t.j. je¿eli $ m_{w}(A)=m_{z}(A) $.
+
+Wspóln¹ wartoœc obu miar nazywamy wówczas {\it miar¹ \fj}\ zbioru $A$ i oznaczmy przez $m(A)$.
+
+\begin{przyklady}
+    1. Ka¿dy przedzia³ $I$ jest zbiorem mierzalnym \fj\ i $ m(I)=|I| $ (por. (1.3) i (2.3)).
+    
+    2. Zbiór $W$ liczb wymiernych przedzia³u \angleBrackets{0,1}\ nie jest mierzalny \fj, gdy¿ $ m_{w}(W)=0 $ i $ m_{w}(W)=1 $ (p. przyklad 2, str. 199)
+\end{przyklady}
+
+\noindent
+\begin{subsecEnumItem}{4.1}
+    Je¿eli $ m(A)=0 $, to $A$ jest zbiorem miary \fl\ zero.
+\end{subsecEnumItem}
+
+Wynika to wprost z okreœlenia miary zewnêtrznej \fj\ i miary \fl\ zero.
+
+\begin{subsecEnumItem}{4.2}
+    Je¿eli $ m_{z}(A)=0 $, to $A$ jest zbiorem mierzalnym \fj\ i $ m(A)=0 $.
+\end{subsecEnumItem}
+
+Na mocy bowiem \ref{3.1}, str. 197, mamy wtedy $ m_{w}(A)=0 $.
+
+Natomiast zbiór miary \fl\ zero mo¿e nie byæ mierzalny \fj\, jak wskazuje przyklad zbioru liczb wymiernych, który nie jest mierzalny \fl, a jako przeliczalny jest miary \fl\ zero.
+
+\begin{subsecEnumItem}{4.3}
+    Ka¿dy zbór $A$ zamkniêty, ograniczony i mieary \fl\ zero jest mierzalny \fj\ i $ m(A)=0 $.
+\end{subsecEnumItem}
+
+Istotnie, na mozy tw. (8.2), str. 92, dla ka¿dego $ \E>0 $ istnieje wówczas skoñczona liczba przedzia³ów pokrywaj¹cych zbór $A$, których suma miar jest mniejsza ni¿ \e. Zatem $ m_{z}(A)<\E $ dla ka¿dego $ \E>0 $, sk¹d $ m_{z}(A)=0 $. Zatem na mocy tw. (4.1) jest $ m(A)=0 $.
+
+W szczególnoœci, poniewa¿ brzeg przedzia³u jest zbiorem zamkniêtym i ograniczonym o mierze \fl\ zero (tw. (7.1), str. 187), wiêc:
+
+\begin{subsecEnumItem}{4.4}
+    Miara \fj\ brzegu przedzia³u jest zerem.
+\end{subsecEnumItem}
+\begin{subsecEnumItem}{4.5}
+    Je¿eli $A$ jest zbiorem mierzalnym \fj, to jego równie¿ zbiorem mierzalnym \fj\ i $ m(A)=m(A') $.
+\end{subsecEnumItem}
+
+Wynika to wprost z tw. (3.4).
+
+\begin{uwaga}
+    Twierdzenie odwrotne by³oby fa³szywe: pochodna $A'$ mo¿e byæ zbiorem mierzalnym \fj. Np. zbiór liczb wymiernych przedzia³u \angleBrackets{0,1}\ nie jest mierzalny \fj\ (przyklad 2, str. 201), podczas gdy jego pochodna jest przedzia³em \angleBrackets{0,1}, a wiêc zbiorem mierzalnym \fj.
+\end{uwaga}
+
+\newpage
+
+\begin{subsecEnumItem}{4.6}
+    Warunkiem koniecznym i wystarczaj¹cym na to, by zbiór ograniczony by³ mierzalny \fj, jest ¿eby jego brzeg by³ zbiorem miary \fj\ zero.
+\end{subsecEnumItem}
+
+Wynika to wprost z tw. \ref{3.6}.
+
+\begin{uwaga}
+    Poniewa¿ brzeg jest zbiorem zamkniêtym, wiêc tw. \ref{4.6} pozostaje prawdziwe, gdy miearê \fj\ brzegu zast¹piæ miar¹ \fl.
+\end{uwaga}
+
+Z tw. (3.7) wynika, ¿e
+
+\begin{subsecEnumItem}{4.7}
+    Mierzalnoœæ \fj\ zbioru $A$ jest równowa¿na mierzalnoœci \fj\ jego wnêtrza $W(A)$ i
+\end{subsecEnumItem}
+
+\noindent
+$$ m(A)=m[W(A)]. $$
+
+\begin{przyklady}
+    1. {\it Wielok¹t jest zbiorem mierzalnym \fj}.
+    
+    Brzeg jego jest bowiem lini¹ ³aman¹, a wiêc zbiorem miary \fl\ zero (p. tw. (7.3), str. 188).
+    
+    2. {\it Ko³o $ x^{2}+y^{2} \leq r^{2} $ jest zbiorem mierzalnym \fj}.
+    
+    Brzeg jego jest bowiem sum¹ wykresów funkcji $ y=\sqrt{r^{3}-x^{2}}, y=-\sqrt{r^{3}-x^{2}} $, ci¹g³ych w przedziale \angleBrackets{-r,r}; na mocy tw. (7.3), str. 188, jest on wiêc zbiorem miary \fl\ zero.
+    
+    Podobnie, {\it kula jest zbiorem mierzalnym \fj}.
+    
+    3. {\it Ka¿dy wieloœcian w przestrzeni \en\ jest zbiorem \fl}.
+    
+    Brzeg wieloœcianu tworz¹ bowiem jego œciany, a ka¿da œciana jest zbiorem miary \fl\ zero (p. str. 190).
+\end{przyklady}
+
+\begin{subsecEnumItem}{4.8}
+    Suma skoñczonej liczby zbiorów $ A_{1},...,A_{r} $ mierzalnych \fj\ jest zbiorem mierzalnym \fj\ i
+\end{subsecEnumItem}
+
+\noindent
+$$ m(A_{1}+...+A_{r}) \leq m(A_{1})+...+m(A_{r}). $$
+
+Mierzalnoœæ sumy $ A_{1}+...+A_{r} $ wynika z tw. \ref{4.6}, poniewa¿ brzeg sumy zbiorów $ A_{1},...,A_{r} $ zawarty jest w sumie brzegów tych zbiorów. Wzór zaœ wynika z tw. \ref{3.3}, str. 197, przez zast¹pienie w nim miary zewnêtrznej \fj\ przez miarê \fj.
+
+\begin{subsecEnumItem}{4.9}
+    Je¿eli zbiory $ A_{1},...,A_{r} $ s¹ mierzalne \fj\ i roz³¹czne, to
+\end{subsecEnumItem}
+
+\begin{eq}{15}
+    m(A_{1}+...+A_{r}) = m(A_{1})+...+m(A_{r}).
+\end{eq}
+
+Istotnie, zastêpuj¹c w tw. \ref{3.3}, str. 198, miarê wewnêtrzn¹ \fj\ przez miarê \fj\ dostajemy
+
+\begin{eq}{16}
+    m(A_{1}+...+A_{r}) \geq m(A_{1})+...+m(A_{r}),
+\end{eq}
+a nierównoœæ odwrotn¹ mamy z tw. \ref{4.8}.
+
+\begin{uwaga}
+    Tw. \ref{4.9} zachodzi ju¿ przy za³o¿eniu, {\it ¿e zbiory $ A_{1},...,A_{r} $ mierzalne \fj\ maj¹ wnêtrza roz³¹czne}.
+\end{uwaga}
+
+\newpage
+
+Mamy bowiem wobec tw. (3.3')
+
+\begin{eq}{17}
+    m_{w}[W(A_{1})+...+W(A_{r})] \geq m_{w}[W(A_{1})]+...+m_{w}[W(A_{r})].
+\end{eq}
+
+Poniewa¿ na mocy tw. \ref{3.6} jest $ m_{w}[W(A_{i})]=m_{w}(A_{i})=m(A_{i}) $ dla $ i=1,2,...,r $ oraz $ W(A_{1})_W(A_{r}) \subset A_{1}+...+A_{r} $, wiêc
+
+$$ m_{w}[W(A_{1})+...+W(A_{r})] \leq m(A_{1}+...+A_{r}). $$
+
+St¹d na mocy \ref{4.7} dostajemy \eqref{16}, a z \ref{4.9} równoœæ \eqref{15}.
+
+\begin{subsecEnumItem}{4.10}
+    Iloczyn skoñczonej liczby zbiorów mierzalnych \fj\ jest zbiorem mierzalnym \fj.
+\end{subsecEnumItem}
+
+Wynika to z tw. \ref{4.7}, poniewa¿ brzeg iloczynu zbiorów jest zawarty w sumie ich brzegów.
+
+\begin{subsecEnumItem}{4.11}
+    Dope³nienie zbioru mierzalnego \fj\ do przedzia³u jest zbiorem mierzalnym \fj.
+\end{subsecEnumItem}
+
+\begin{dowod}
+    Je¿eli zbiór $A$ jest zawarty w przedziale $I$, to brzeg zbioru $I-A$ jest zawarty w sumie brzegu zbioru $A$ i brzegu przedzia³u $I$. Poniewa¿ oba brzegi s¹ zbiorami miary \fj\ zero na mocy tw. \ref{4.1} i \ref{4.6}, wiêc ich suma, a tym bardziej brzeg zbioru $I-A$ jest wiêc mierzalny \fj.
+\end{dowod}
+
+\begin{subsecEnumItem}{4.12}
+    Je¿eli zbiory $A$ i $B$ s¹ mierzalne, to ró¿nica $A-B$ jest zbiorem mierzalnym \fj.
+
+    Je¿eli ponadto $ B \subset A $, wówczas
+\end{subsecEnumItem}
+
+\noindent
+$$ m(A-B)=m(A)-m(B). $$
+
+\begin{dowod}
+    Niech $I$ bêdzie przedzia³em zawieraj¹cym $A+B$. Wówczas $ A-B=A \cdot (I-B) $ i ró¿nica $A-B$ jest zbiorem mierzalnym \fj\ na mocy tw. \ref{4.10}, jako iloczyn zbiorów $A$ i $I-B$, z których pierwszy jest mierzalny \fj\ z za³o¿enia, a drugi na mocy tw. \ref{4.11}.
+\end{dowod}
+
+Je¿eli ponadto $ B \subset A $, wówczas $ A=B+(A-B) $, sk¹d
+
+$$ m(A)=m[B+(A-B)] = m(B)+m(A-B), $$
+
+gdy¿ zbiory $A$ i $A-B$ s¹ roz³¹czne.
+
+\newpage
+
+\mySubsection{Przesuniêcie równoleg³e}
+Niech $E$ bêdzie dowolnym zbiorem ograniczonym w \en, a $(a_{1},...,c_{n})$ dowolnym uk³adem $n$ liczb. Niech ka¿demu punktowi $ p'=(x'_{1},...,x'_{n}) $ za pomoc¹ równañ
+
+\begin{eq}{18}
+    \hspace*{4.5cm} x'_{i}=x_{i}+a_{i} \hspace*{3.5cm} (i=1,2,...,n)
+\end{eq}
+
+Przyporz¹dkowanie to jest odwzorowaniem wzajemnie jednoznacznym i ci¹g³ym zbioru $E$ na zbiór $E'$ punktów $p'$.
+
+Odwzorowanie \eqref{18} nazywamy {\it przesuniêciem (równoleg³ym)}.
+
+Z okreœlenia wynika, ¿e odwzorowanie odwrotne
+
+\begin{eq}{19}
+    \hspace*{4.5cm} x_{i}=x'_{i}+a_{i} \hspace*{3.5cm} (i=1,2,...,n)
+\end{eq}
+
+\noindent
+jest przesuniêciem (równoleg³ym) zbioru $E'$ na zbiór $E$.
+
+Przez Przesuniêcie równoleg³e przedzia³ $ I=\langle a_{1},...,a_{n}; b_{1},...,b_{n} \rangle $ przechodzi na przedzia³ $ I'=\langle a_{1}+a_{1},...,a_{n}+a_{n}; b_{1}+a_{1},...,b_{n}+a_{n} \rangle $ i miara przedzia³u zostaje zachowana, t.j. $ |I|=|I'| $. Ogólnie:
+
+\begin{subsecEnumItem}
+    Je¿eli zbiór ograniczony $E$ przechodzi przez przesuniêcie równoleg³e w zbiór $E'$, to
+\end{subsecEnumItem}
+
+\noindent
+$$ m_{w}(E)=m_{w}(E'), \eqSeparator
+m_{z}(E)=m_{z}(E'). $$
+
+\begin{dowod}
+    Niech $ E \subset I_{1}+...+I_{m} $. Zbiór $E'$ jest oczywiœcie zawarty w sumie przedzia³ów $ I'_{1},...,I'_{m} $, na które przejd¹ przedzia³y $ I_{1},...,I_{m} $ przez przesuniêcie \eqref{18}. Poniewa¿ przesuniêcie równoleg³e zachowuje miarê przedzia³ów , wiêc $ |I_{1}|+...+|I_{m}|=|I'_{1}|+...+|I'_{m}| $, sk¹d $ m_{z}(E) \geq m_{z}(E') $. Na odwtót, poniewa¿ przez przesuniêcie \eqref{19} $E'$ przechodzi na $E$, wiêc dostajemy $ m_{z}(E') \geq m_{z}(E) $. Zatem $ m_{z}(E) = m_{z}(E') $.
+\end{dowod}
+
+Podobnie dowodzi siê równoœci miar wewnêtrznych.
+
+Wynika st¹d od razu twierdzenie nastêpuj¹ce:
+
+\begin{subsecEnumItem}
+    Jeœli zbiór $E$ jest mierzalny \fj, to jego przesuniêcie $E'$ jest równie¿ zbiorem mierzalnym \fj\ i miary \fj\ obu zbiorów s¹ równe.
+\end{subsecEnumItem}
+
+\mySubsection{Ca³ka $\Re$ funkcji w zbiorze}
+Niech $E$ bêdzie zbiorem ograniczonym w \en, a $f(p)$ funkcj¹ ograniczon¹, okreœlon¹ w $E$.
+
+Oznaczmy przez $f^{*}$ funkcje, która jest przed³u¿eniem funkcji $f$ na ca³¹ przestrzeñ \en, przyjmuj¹c $ f^{*}(p)=0 $ dla $p$ nie nale¿¹cych do $E$.
+Zatem funkcja $f^{*}(p)$ jest okreœlona w ca³ej przestrzeni \en\ i ograniczona w tej przestrzeni.
+
+\end{document}

@@ -1,0 +1,64 @@
+<?php $title = "Formularz";
+$images = array(
+    "Kvietka" => "kvietka",
+    "PaŹniakoviec" => "pazniak",
+    "BKA BCR F.V.Kušal" => "kusal",
+    "BRAK" => "brak"
+);
+function getResult($prop) {
+	return isset($_POST[$prop])
+        ? "BRAK"
+        : $_POST[$prop];
+}
+?>
+
+<div>
+<?php if(isset($_POST['submit'])) : ?>
+
+<div class="standard-box result-box">
+    <div class="title">
+        Wprowadzone dane
+    </div>
+    <div class="content">
+        Imię: <?= getResult('name') ?>
+        <br>
+        Nazwisko: <?= getResult('lastname') ?>
+        <br>
+        Data urodzenia: <?= getResult('birthdate') ?>
+        <br>
+        Rodzaj udziału: <?= $_POST['kind'] ?>
+    </div>
+</div>
+
+<img class="illustration" src="pages/form/<?= $images[$_POST['kind']] ?>.jpg">
+
+<?php else : ?>
+
+<form method="POST" class="standard-box">
+    <div class="title">
+        Wniosek o udział w ‡NASTUP‡
+    </div>
+    <div class="content">
+        <label for="name">Imię</label>
+        <input type="text" name="name" id="name">
+        <label for="lastname">Nazwisko</label>
+        <input type="text" name="lastname" id="lastname">
+        <label for="birthdate">Data urodzenia</label>
+        <input type="text" name="birthdate" id="birthdate">
+        <fieldset>
+            <legend>Rodzaj udziału</legend>
+            <?php
+            $arr = array("Kvietka", "PaŹniakoviec", "BKA BCR F.V.Kušal");
+            foreach ($arr as $value)
+                echo "<input type='radio' name='kind' id='$value' value='$value'><label for='$value'>$value</label><br>";
+            ?>
+            <input type='radio' name='kind' id='none' value='BRAK' checked><label for='none'>bez specjalizacji</label>
+        </fieldset>
+    </div>
+    <input type="submit" name="submit" value="Wyślij">
+</form>
+
+<img class="illustration" src="pages/form/when_form.jpg">
+
+<?php endif; ?>
+</div>

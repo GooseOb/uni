@@ -1,0 +1,81 @@
+<main class="main">
+  <div class="container">
+    <div class="main__content d-flex flex-column align-items-center">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="main__content-title">Zarejestruj się</h2>
+        </div>
+      </div>
+      <div class="form__logging">
+        <form (ngSubmit)="onSubmit()" #registrationForm="ngForm" class="form d-flex flex-column align-items-center">
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Login
+              </label>
+              <input class="form__logging-item align-self-center" type="text" name="username" [(ngModel)]="username" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Hasło
+              </label>
+              <input class="form__logging-item" type="password" name="password" [(ngModel)]="password" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Imię
+              </label>
+              <input class="form__logging-item" type="text" name="firstName" [(ngModel)]="firstName" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Nazwisko
+              </label>
+              <input class="form__logging-item" type="text" name="lastName" [(ngModel)]="lastName" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Data urodzenia
+              </label>
+              <input class="form__logging-item" type="date" name="birthDate" [(ngModel)]="birthDate" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Adres e-mail
+              </label>
+              <input class="form__logging-item" type="email" name="email" [(ngModel)]="email" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                Numer telefonu
+              </label>
+              <input class="form__logging-item" type="tel" name="lastName" [(ngModel)]="phoneNumber" required>
+            </div>
+          </div>
+          <div class="row" *ngIf="error">
+            <div class="col-12">
+              <p style="color: red">Błędne dane lub niekompletne dane.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button class="form__logging-btn" type="submit">Zarejestruj się</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

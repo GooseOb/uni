@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Title"
+        android:textColor="@color/accent_color" />
+
+    <EditText
+        android:id="@+id/editTextProductTypeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Enter title"
+        android:inputType="text"
+        android:textColor="#201E28" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:text="Image URL"
+        android:textColor="@color/accent_color" />
+
+    <EditText
+        android:id="@+id/editTextProductTypeImageUrl"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Enter image URL"
+        android:inputType="textUri"
+        android:textColor="#201E28" />
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?php $title="Edycja bazy";
+include __DIR__ . "/../../db_connect.php";
+
+if(!isset($_GET['action'])):
+$result = mysqli_query($conn, "SELECT * FROM grants;");
+?>
+
+<h1>Granty</h1>
+
+<table class="standard-box">
+	<thead class="title">
+	<tr>
+		<th>id</th>
+        <th>data</th>
+		<th>grantodawca</th>
+		<th>odbiorca</th>
+		<th>suma, $</th>
+		<th>usuń</th>
+		<th>edytuj</th>
+	</tr>
+	</thead>
+	<tbody class="content">
+	<?php while ($row = mysqli_fetch_row($result)) {
+		$id = $row[0];
+		echo '<tr>';
+		foreach ($row as $value)
+			echo "<td>$value</td>";
+		echo "<td><a href='?action=delete&id=$id'>usuń</a></td> <td><a href='?action=edit&id=$id'>edytuj</a></td> </tr>";
+	} ?>
+	<tr>
+		<td colspan="7">
+			<a href="tobase">dodaj</a>
+		</td>
+	</tr>
+	</tbody>
+</table>
+</div>
+
+<? elseif($_GET['action'] == "delete" || isset($_POST['submit'])):
+	$id = $_GET['id'];
+?>
+
+<div class="result">
+	<?php switch($_GET['action']) {
+		case 'delete': echo mysqli_query($conn, "DELETE FROM grants WHERE id = $id;")
+                ? "zapis $id został usunięty"
+                : "zapis $id nie został usunięty";
+        break;
+		case 'edit':
+			extract($_POST, EXTR_OVERWRITE, "form_");
+			echo mysqli_query($conn, "UPDATE grants SET date = '$date', grantor = '$grantor', recipient = '$recipient', amount = '$amount' WHERE id = $id")
+                ? "zapis $id został zedytowany"
+                : "zapis $id nie został zedytowany";
+	} ?>
+	<br>
+	<a href="editbase">wróć</a>
+	<br>
+	<a href="base">do bazy</a>
+</div>
+
+<?php else:
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM grants WHERE id = $id;");
+$data = mysqli_fetch_array($result);
+?>
+
+<form method="POST" class="standard-box edit-form">
+	<div class="title">
+		Edytowanie zapisu <?= $id ?>
+	</div>
+	<div class="content">
+		<?php
+			include __DIR__ . '/../../fields.php';
+			foreach($fields as $input_id => $label) {
+				$value = $data[$input_id];
+				echo "<label for='$input_id'>$label</label> <input type='text' name='$input_id' id='$input_id' value='$value'>";
+			}
+		?>
+	</div>
+	<input type="submit" name="submit" value="Edytuj">
+</form>
+
+<?php endif; ?>

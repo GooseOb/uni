@@ -1,0 +1,450 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>3D Model Viewer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      canvas {
+        display: block;
+        margin: 10px auto;
+        background: #dedede;
+      }
+
+      .controls {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .controls button {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body onkeydown="keyDownHandler(event)">
+    <canvas id="canvas" width="1000" height="500">
+      <p>Sorry, your browser does not support the HTML canvas element.</p>
+    </canvas>
+
+    <div class="controls">
+      <button onclick="resetCanvas()">Reset</button>
+      <br />
+      Propeller animation
+      <button onclick="propellerAnimation.start()">Start</button>
+      <button onclick="propellerAnimation.stop()">Stop</button>
+      <br />
+      Rotate
+      <button onclick="rotateModel('x')">X</button>
+      <button onclick="rotateModel('y')">Y</button>
+      <button onclick="rotateModel('z')">Z</button>
+      <br />
+      <button onclick="translateModel([-10, 0, 0])">← Left</button>
+      <button onclick="translateModel([10, 0, 0])">→ Right</button>
+      <button onclick="translateModel([0, -10, 0])">↑ Up</button>
+      <button onclick="translateModel([0, 10, 0])">↓ Down</button>
+      <br />
+      <button onclick="translateModel([0, 0, -10])">Forward</button>
+      <button onclick="translateModel([0, 0, 10])">Backward</button>
+      <br />
+      Zoom
+      <button onclick="scaleModel(1.1)">In</button>
+      <button onclick="scaleModel(0.9)">Out</button>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const clearCanvas = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      };
+
+      const projectTo2D = (point3D) => [
+        ((point3D[0] - observerPosition[0]) * focalLength) /
+          (focalLength + point3D[2]) +
+          observerPosition[0],
+        ((point3D[1] - observerPosition[1]) * focalLength) /
+          (focalLength + point3D[2]) +
+          observerPosition[1],
+      ];
+
+      const draw3DLine = (start3D, end3D, color) => {
+        const [x1, y1] = projectTo2D(start3D);
+        const [x2, y2] = projectTo2D(end3D);
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = color;
+        ctx.stroke();
+      };
+
+      const addVertices = ([x1, y1, z1], [x2, y2, z2]) => [
+        x1 + x2,
+        y1 + y2,
+        z1 + z2,
+      ];
+
+      const calcCenter = (vertices) =>
+        vertices
+          .reduce(addVertices, [0, 0, 0])
+          .map((sum) => sum / vertices.length);
+
+      const copyVertices = (vertices) => vertices.map(([x, y, z]) => [x, y, z]);
+
+      const memorizeVertices = (parts) => {
+        const value = parts.map((part) => copyVertices(part.vertices));
+        return () => {
+          for (let i = 0; i < parts.length; i++) {
+            parts[i].vertices = copyVertices(value[i]);
+          }
+        };
+      };
+
+      const resetCanvas = () => {
+        focalLength = initialFocalLength;
+        propellerAnimation.stop();
+        recallPartsVertices();
+        draw();
+      };
+
+      const draw = () => {
+        clearCanvas();
+        for (const part of parts) {
+          part.draw();
+        }
+      };
+
+      const modifyEachPart = (callback) => {
+        for (const part of parts) {
+          callback(part);
+        }
+        draw();
+      };
+
+      const translateModel = (vector) => {
+        modifyEachPart((part) => {
+          part.translate(vector);
+        });
+      };
+
+      const scaleModel = (factor) => {
+        modifyEachPart((part) => {
+          part.scale(factor);
+        });
+      };
+
+      const rotateModel = (axis) => {
+        const center = calcCenter(parts.flatMap((part) => part.vertices));
+
+        modifyEachPart((part) => {
+          part.rotate(axis, 10, center);
+        });
+      };
+
+      const createAnimation = (animate, ms) => {
+        let id = 0;
+        return {
+          start: () => {
+            id ||= setInterval(animate, ms);
+          },
+          stop: () => {
+            if (id) {
+              clearInterval(id);
+              id = 0;
+            }
+          },
+        };
+      };
+
+      const keyDownHandler = (e) => {
+        const key = e.code;
+        const translation = {
+          ArrowLeft: [-10, 0, 0],
+          ArrowRight: [10, 0, 0],
+          ArrowUp: [0, -10, 0],
+          ArrowDown: [0, 10, 0],
+          PageUp: [0, 0, -10],
+          PageDown: [0, 0, 10],
+        }[key];
+
+        if (translation) {
+          translateModel(translation);
+        } else {
+          const axis = {
+            KeyX: "x",
+            KeyY: "y",
+            KeyZ: "z",
+          }[key];
+          if (axis !== undefined) {
+            rotateModel(axis);
+          }
+        }
+      };
+
+      const observerPosition = [320, 240];
+      const initialFocalLength = 700;
+      let focalLength = initialFocalLength;
+
+      class Part {
+        constructor(args) {
+          this.color = args.color || "green";
+          this.vertices = args.vertices;
+          this.edges = args.edges;
+          if (args.translate) {
+            this.translate(args.translate);
+          }
+        }
+
+        draw() {
+          for (const [start, end] of this.edges) {
+            draw3DLine(this.vertices[start], this.vertices[end], this.color);
+          }
+        }
+
+        translate(vector) {
+          this.updateVertices((vertex) => addVertices(vertex, vector));
+        }
+
+        scale(factor) {
+          this.updateVertices(([x, y, z]) => [
+            x * factor,
+            y * factor,
+            z * factor,
+          ]);
+        }
+
+        rotate(axis, angle, [cx, cy, cz] = calcCenter(this.vertices)) {
+          const radians = (angle * Math.PI) / 180;
+          const cos = Math.cos(radians);
+          const sin = Math.sin(radians);
+
+          this.updateVertices(
+            {
+              x: ([x, y, z]) => [
+                x,
+                cy + (y - cy) * cos - (z - cz) * sin,
+                cz + (y - cy) * sin + (z - cz) * cos,
+              ],
+              y: ([x, y, z]) => [
+                cx + (x - cx) * cos + (z - cz) * sin,
+                y,
+                cz - (x - cx) * sin + (z - cz) * cos,
+              ],
+              z: ([x, y, z]) => [
+                cx + (x - cx) * cos - (y - cy) * sin,
+                cy + (x - cx) * sin + (y - cy) * cos,
+                z,
+              ],
+            }[axis],
+          );
+        }
+
+        updateVertices(mapper) {
+          this.vertices = this.vertices.map(mapper);
+        }
+      }
+
+      class Polygon extends Part {
+        constructor(args) {
+          args.edges = args.vertices.map((_, i) => [i, i + 1]);
+          args.edges.at(-1)[1] = 0;
+          super(args);
+        }
+      }
+
+      class Box extends Part {
+        edges = [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 0],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 4],
+          [0, 4],
+          [1, 5],
+          [2, 6],
+          [3, 7],
+        ];
+      }
+
+      class Cube extends Box {
+        constructor(args) {
+          const {
+            start: [x1, y1, z1],
+            end: [x2, y2, z2],
+          } = args;
+          args.vertices = [
+            [x1, y1, z1],
+            [x2, y1, z1],
+            [x2, y2, z1],
+            [x1, y2, z1],
+            [x1, y1, z2],
+            [x2, y1, z2],
+            [x2, y2, z2],
+            [x1, y2, z2],
+          ];
+          super(args);
+        }
+      }
+
+      class SimplePropeller extends Part {
+        constructor(args) {
+          const {
+            size = 0.0,
+            z = -0.2,
+            center: [x1, y1, z1],
+            blades = 3,
+          } = args;
+
+          const blade = (radians) => [
+            size * Math.cos(radians) + x1,
+            size * Math.sin(radians) + y1,
+            z + z1,
+          ];
+
+          const radiansBetweenBlades = (2 * Math.PI) / blades;
+
+          args.vertices = Array.from({ length: blades }, (_, i) =>
+            blade(i * radiansBetweenBlades),
+          );
+
+          args.edges = args.vertices.map((_, i) => [0, i + 1]);
+
+          args.vertices.unshift(args.center);
+
+          super(args);
+
+          if (args.rotate) {
+            const { axis = "z", angle } = args.rotate;
+            this.rotate(axis, angle, this.vertices[0]);
+          }
+        }
+      }
+
+      const trippleOf = (x) => [x, x, x];
+
+      // --- Create parts ---
+
+      const propeller1 = new SimplePropeller({
+        color: "black",
+        center: [3.75, -0.45, 6.4 + 2.5],
+        size: 0.5,
+        z: -0.2,
+        blades: 3,
+      });
+      const propeller2 = new SimplePropeller({
+        color: "black",
+        center: [9.25, -0.45, 6.4 + 2.5],
+        size: 0.5,
+        z: -0.2,
+        blades: 3,
+      });
+
+      const parts = [
+        new Box({
+          vertices: [
+            [6, 0.5, 7.5],
+            [7, 0.5, 7.5],
+            [7, 0.5, 7.5],
+            [6, 0.5, 7.5],
+
+            [6, -0.5, 8],
+            [7, -0.5, 8],
+            [7, 0.5, 8],
+            [6, 0.5, 8],
+          ],
+        }),
+        new Cube({
+          start: [6, 0.5, 5.5],
+          end: [7, -0.5, 7.5],
+          translate: [0, 0, 2.5],
+        }),
+        new Polygon({
+          vertices: [
+            [4, -0.5, 6.5],
+            [4, -0.5, 7],
+            [9, -0.5, 7],
+            [9, -0.5, 6.5],
+          ],
+          translate: [0, 0, 2.5],
+        }),
+        new Cube({
+          start: [3.5, -0.2, 6.4],
+          end: [4, -0.7, 7.1],
+          translate: [0, 0, 2.5],
+        }),
+        new Cube({
+          start: [9, -0.2, 6.4],
+          end: [9.5, -0.7, 7.1],
+          translate: [0, 0, 2.5],
+        }),
+
+        new Box({
+          vertices: [
+            [6.2, -0.5, 5.5],
+            [6, -0.5, 3],
+            [7, -0.5, 3],
+            [6.7, -0.5, 5.5],
+
+            [6.2, -0.5, 5.5],
+            [6, 0.5, 3],
+            [7, 0.5, 3],
+            [6.7, -0.5, 5.5],
+          ],
+          translate: [0, 0, 7],
+        }),
+
+        new Polygon({
+          vertices: [
+            [5.4, -0.5, 3.5],
+            [5.4, -0.5, 3],
+            [7.6, -0.5, 3],
+            [7.6, -0.5, 3.5],
+          ],
+          translate: [0, 0, 7 + 2],
+        }),
+        new Polygon({
+          vertices: [
+            [5.4, -0.5, 3],
+            [5.4, -0.5, 3.5],
+            [5.4, -0.9, 3.5],
+            [5.4, -0.9, 3.3],
+          ],
+          translate: [0, 0, 7 + 2],
+        }),
+        new Polygon({
+          vertices: [
+            [7.6, -0.5, 3],
+            [7.6, -0.5, 3.5],
+            [7.6, -0.9, 3.5],
+            [7.6, -0.9, 3.3],
+          ],
+          translate: [0, 0, 7 + 2],
+        }),
+
+        propeller1,
+        propeller2,
+      ];
+
+      translateModel([-0.5, 2, 0]);
+      scaleModel(150);
+
+      const propellerAnimation = createAnimation(() => {
+        propeller1.rotate("z", 10, propeller1.vertices[0]);
+        propeller2.rotate("z", 10, propeller2.vertices[0]);
+        draw();
+      }, 50);
+
+      const recallPartsVertices = memorizeVertices(parts);
+      resetCanvas();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <h3>Zmień rezerwację</h3>
+
+  </div>
+  <div class="row">
+    <div class="form__profile" *ngIf="booking && booking.dateStart && booking.dateEnd">
+      <div class="row">
+        <div class="col">
+          <h4 routerLink="/show" [queryParams]="{a:booking.accommodation.id}">{{booking.accommodation.name}}</h4>
+          <p *ngIf="booking.dateStart != null">od {{booking.dateStart.substring(0, 10)}}</p>
+          <p *ngIf="booking.dateEnd != null">do {{booking.dateEnd.substring(0, 10)}}</p>
+          <p><b>Łączna cena: {{formatNumber(booking.price, 'pl', '0.2-2')}} zł</b></p>
+          <p *ngIf="!booking.accepted && !booking.rejected">Oczekuje na potwierdzenie</p>
+          <p *ngIf="booking.accepted && !booking.rejected">Potwierdzone</p>
+          <p *ngIf="!booking.accepted && booking.rejected">Odrzucone</p>
+          <p *ngIf="booking.accepted && booking.rejected">Błąd</p>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          Data początkowa:
+        </div>
+        <div class="col-3">
+          <div class="form__div_style" *ngIf="change != 'dateStart'">
+            <input class="form__input_style" type="date" name="dateStart" [(ngModel)]="booking.dateStart" disabled>
+          </div>
+          <div class="form__div_style" *ngIf="change == 'dateStart'">
+            <input class="form__input_style" type="date" name="dateStart" [(ngModel)]="booking.dateStart">
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form__div_style" *ngIf="change != 'dateStart'">
+            <a (click)="change = 'dateStart'">Zmień</a>
+          </div>
+          <div class="form__div_style" *ngIf="change == 'dateStart'">
+            <a (click)="onSubmit()">Zaakceptuj</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          Data końcowa:
+        </div>
+        <div class="col-3">
+          <div class="form__div_style" *ngIf="change != 'dateEnd'">
+            <input class="form__input_style" type="date" name="dateEnd" [(ngModel)]="booking.dateEnd" disabled>
+          </div>
+          <div class="form__div_style" *ngIf="change == 'dateEnd'">
+            <input class="form__input_style" type="date" name="dateEnd" [(ngModel)]="booking.dateEnd">
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form__div_style" *ngIf="change != 'dateEnd'">
+            <a (click)="change = 'dateEnd'">Zmień</a>
+          </div>
+          <div class="form__div_style" *ngIf="change == 'dateEnd'">
+            <a (click)="onSubmit()">Zaakceptuj</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

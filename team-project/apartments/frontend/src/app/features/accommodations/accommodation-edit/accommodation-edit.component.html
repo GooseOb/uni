@@ -1,0 +1,166 @@
+<div class="container">
+  <h3>Edytuj ogłoszenie</h3>
+  <div class="form__profile" *ngIf="accommodation">
+    <div class="row">
+      <div class="col-6" *ngFor="let photo of accommodation.photos">
+        <img *ngIf="photo" [src]="AppModule.API_ADDRESS + 'photos/' + photo.name.toString()" width="250px">
+        <div class="form__div_style" *ngIf="change != 'name'">
+          <a class="buttonDelete" (click)="this.accommodationService.deleteAccommodationPhoto(accommodation, photo)">Usuń</a>
+        </div>
+      </div>
+      <div class="col-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Nazwa:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'name'">
+          <input class="form__input_style" type="text" name="name" [(ngModel)]="accommodation.name" disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'name'">
+          <input class="form__input_style" type="text" name="name" [(ngModel)]="accommodation.name">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'name'">
+          <a (click)="change = 'name'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'name'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Opis:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'description'">
+          <input class="form__input_style" type="text" name="description" [(ngModel)]="accommodation.description"
+                 disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'description'">
+          <input class="form__input_style" type="text" name="description" [(ngModel)]="accommodation.description">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'description'">
+          <a (click)="change = 'description'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'description'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Cena:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'price'">
+          <input class="form__input_style" type="text" name="price" [(ngModel)]="accommodation.price" disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'price'">
+          <input class="form__input_style" type="text" name="price" [(ngModel)]="accommodation.price">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'price'">
+          <a (click)="change = 'price'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'price'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Ulica i numer domu:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'street'">
+          <input class="form__input_style" type="text" name="street" [(ngModel)]="accommodation.street" disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'street'">
+          <input class="form__input_style" type="text" name="street" [(ngModel)]="accommodation.street">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'street'">
+          <a (click)="change = 'street'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'street'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Miasto:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'city'">
+          <input class="form__input_style" type="text" name="city" [(ngModel)]="accommodation.city" disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'city'">
+          <input class="form__input_style" type="text" name="city" [(ngModel)]="accommodation.city">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'city'">
+          <a (click)="change = 'city'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'city'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Państwo:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'country'">
+          <input class="form__input_style" type="text" name="country" [(ngModel)]="accommodation.country" disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'country'">
+          <input class="form__input_style" type="text" name="country" [(ngModel)]="accommodation.country">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'country'">
+          <a (click)="change = 'country'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'country'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        Dodaj zdjęcie:
+      </div>
+      <div class="col-3">
+        <div class="form__div_style" *ngIf="change != 'photo'">
+          <input class="form__input_style" type="file" name="photo" [(ngModel)]="photo" disabled>
+        </div>
+        <div class="form__div_style" *ngIf="change == 'photo'">
+          <input class="form__input_style" type="file" name="photo" (change)="handleFileInput($event)"
+                 [(ngModel)]="photo">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="button" *ngIf="change != 'photo'">
+          <a (click)="change = 'photo'">Zmień</a>
+        </div>
+        <div class="button" *ngIf="change == 'photo'">
+          <a (click)="onSubmit()">Zaakceptuj</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <a routerLink="/show" [queryParams]="{a:accommodation!.id}">Przejdź do ogłoszenia</a>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+Gracze z największą liczbą zwycięstw (5):
+Dorian Andrzejewski (Łącznie pieniędzy: 38543, Pudełka otwarte: 704)
+
+Łączna wygrana wszystkich zwycięzców: 2558796
