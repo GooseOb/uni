@@ -1,9 +1,0 @@
-<?php $title="Baza grantów";
-include __DIR__ . "/../../db_connect.php";
-
-$result = mysqli_query($conn, "SELECT * FROM grants;");
-?>
-
-<h1>Granty</h1>
-
-<?php include "table.php" ?>
