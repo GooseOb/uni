@@ -16,3 +16,6 @@
 [submodule "team-project/apartments"]
 	path = team-project/apartments
 	url = https://github.com/pz-tekj/apartments.git
+[submodule "pai"]
+	path = pai
+	url = https://github.com/GooseOb/pai2024.git
