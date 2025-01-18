@@ -1,21 +1,28 @@
 [submodule "azure"]
 	path = azure
 	url = https://github.com/GooseOb/azure-IoT-UL.git
+	branch = main
 [submodule "grafika/setup"]
 	path = grafika/setup
 	url = https://github.com/GooseOb/grafika-kolos-template.git
+	branch = main
 [submodule "grafika/web-arkanoid-3d"]
 	path = grafika/web-arkanoid-3d
 	url = https://github.com/GooseOb/web-arkanoid-3d.git
+	branch = main
 [submodule "software-engineering/fresh-saver"]
 	path = software-engineering/fresh-saver
 	url = https://github.com/GooseOb/fresh-saver.git
+	branch = master
 [submodule "spi/php-spi/public_html"]
 	path = spi/php-spi/public_html
 	url = https://github.com/GooseOb/php-spi.git
+	branch = main
 [submodule "team-project/apartments"]
 	path = team-project/apartments
 	url = https://github.com/pz-tekj/apartments.git
+	branch = main
 [submodule "pai"]
 	path = pai
 	url = https://github.com/GooseOb/pai2024.git
+	branch = main
